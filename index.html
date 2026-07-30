@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guitar App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">🎸</div>
+        <h1>Guitar App</h1>
+      </div>
+      <p class="tagline">Songs • Chords • Patterns • Practice • Fretboard Trainer</p>
+      <nav class="nav">
+        <button class="nav-btn active" data-target="songs">Songs</button>
+        <button class="nav-btn" data-target="chords">Chords</button>
+        <button class="nav-btn" data-target="patterns">Patterns</button>
+        <button class="nav-btn" data-target="practice">Practice</button>
+        <button class="nav-btn" data-target="fretboard">Fretboard</button>
+      </nav>
+    </header>
+
+    <!-- SONGS -->
+    <section id="songs" class="section active">
+      <div class="section-header">
+        <h2>Songs</h2>
+        <p>Browse songs by difficulty, chords, and patterns.</p>
+      </div>
+      <div class="filter-bar" id="song-filters"></div>
+      <div class="songs-grid" id="songs-grid"></div>
+    </section>
+
+    <!-- CHORDS -->
+    <section id="chords" class="section">
+      <div class="section-header">
+        <h2>Chords</h2>
+        <p>Chord diagrams, fingers, notes, and intervals.</p>
+      </div>
+      <div class="chords-grid" id="chords-grid"></div>
+      <div class="chord-tips">
+        <h3>General Tips</h3>
+        <ul id="chord-tips-list"></ul>
+      </div>
+    </section>
+
+    <!-- PATTERNS -->
+    <section id="patterns" class="section">
+      <div class="section-header">
+        <h2>Strumming Patterns</h2>
+        <p>Visual patterns with example songs.</p>
+      </div>
+      <div class="patterns-list" id="patterns-list"></div>
+    </section>
+
+    <!-- PRACTICE -->
+    <section id="practice" class="section">
+      <div class="section-header">
+        <h2>Practice Mode</h2>
+        <p>Interactive tempo, beat lights, and strum visualizer.</p>
+      </div>
+      <div class="practice-panel">
+        <div class="practice-controls">
+          <label>
+            Pattern
+            <select id="practice-pattern"></select>
+          </label>
+          <label>
+            Chord Progression
+            <select id="practice-chords"></select>
+          </label>
+          <label>
+            Tempo: <span id="tempo-value">120</span> BPM
+            <input type="range" id="tempo-slider" min="40" max="200" value="120">
+          </label>
+          <div class="btn-row">
+            <button class="primary-btn" id="start-btn">Start</button>
+            <button class="secondary-btn" id="stop-btn" disabled>Stop</button>
+          </div>
+        </div>
+        <div class="visualizer">
+          <div class="beat-lights" id="beat-lights"></div>
+          <div class="strum-display">
+            <span class="strum-arrow" id="strum-arrow">↓</span>
+          </div>
+          <div class="current-chord" id="current-chord"></div>
+          <div class="pattern-text" id="pattern-text"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRETBOARD -->
+    <section id="fretboard" class="section">
+      <div class="section-header">
+        <h2>Fretboard Visualiser</h2>
+        <p>Scales, triads, arpeggios, sweeps across the full neck.</p>
+      </div>
+      <div class="practice-controls">
+        <label>
+          Root
+          <select id="fb-root"></select>
+        </label>
+        <label>
+          Scale / Mode
+          <select id="fb-scale">
+            <option value="major">Major</option>
+            <option value="minor">Minor</option>
+            <option value="pentMajor">Pent Major</option>
+            <option value="pentMinor">Pent Minor</option>
+          </select>
+        </label>
+        <label>
+          Triad / Arpeggio
+          <select id="fb-arp">
+            <option value="none">None</option>
+            <option value="major">Major Triad / Arp</option>
+            <option value="minor">Minor Triad / Arp</option>
+            <option value="dom7">Dom7 Arp</option>
+            <option value="maj7">Maj7 Arp</option>
+            <option value="min7">Min7 Arp</option>
+          </select>
+        </label>
+        <label>
+          CAGED Position
+          <select id="fb-pos">
+            <option value="C">C</option>
+            <option value="A">A</option>
+            <option value="G">G</option>
+            <option value="E">E</option>
+            <option value="D">D</option>
+          </select>
+        </label>
+        <label>
+          Max Fret
+          <input type="number" id="fb-maxfret" value="21" min="12" max="24">
+        </label>
+        <div class="btn-row">
+          <button class="primary-btn" id="fb-render">Render</button>
+        </div>
+      </div>
+      <div id="fb-output"></div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal" id="song-modal">
+      <div class="modal-content">
+        <button class="close-btn" id="modal-close">×</button>
+        <div class="modal-body">
+          <h2 id="modal-title"></h2>
+          <div class="artist" id="modal-artist"></div>
+
+          <div class="modal-section">
+            <h4>Chords</h4>
+            <div class="modal-chords" id="modal-chords"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Pattern</h4>
+            <div class="modal-pattern" id="modal-pattern"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Tips</h4>
+            <div class="modal-tips" id="modal-tips"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Progress</h4>
+            <div class="modal-progress" id="modal-progress"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Scale Overlays</h4>
+            <div class="modal-scales">
+              <button class="nav-btn" data-scale="major">Major</button>
+              <button class="nav-btn" data-scale="minor">Minor</button>
+              <button class="nav-btn" data-scale="pentMajor">Pent Major</button>
+              <button class="nav-btn" data-scale="pentMinor">Pent Minor</button>
+            </div>
+            <div id="modal-scale-fretboard"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Triads</h4>
+            <div class="modal-triads">
+              <button class="nav-btn" data-triad="major" data-pos="C">C</button>
+              <button class="nav-btn" data-triad="major" data-pos="A">A</button>
+              <button class="nav-btn" data-triad="major" data-pos="G">G</button>
+              <button class="nav-btn" data-triad="major" data-pos="E">E</button>
+              <button class="nav-btn" data-triad="major" data-pos="D">D</button>
+            </div>
+            <div id="modal-triad-fretboard"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Arpeggios</h4>
+            <div class="modal-arpeggios">
+              <button class="nav-btn" data-arp="major" data-pos="C">Major (C)</button>
+              <button class="nav-btn" data-arp="minor" data-pos="A">Minor (A)</button>
+              <button class="nav-btn" data-arp="dom7" data-pos="G">Dom7 (G)</button>
+              <button class="nav-btn" data-arp="maj7" data-pos="E">Maj7 (E)</button>
+              <button class="nav-btn" data-arp="min7" data-pos="D">Min7 (D)</button>
+            </div>
+            <div id="modal-arpeggio-fretboard"></div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Sweep Picking</h4>
+            <div class="modal-sweeps">
+              <button class="nav-btn" data-arp="major" data-pos="C">Major Sweep (C)</button>
+              <button class="nav-btn" data-arp="minor" data-pos="A">Minor Sweep (A)</button>
+              <button class="nav-btn" data-arp="dom7" data-pos="G">Dom7 Sweep (G)</button>
+              <button class="nav-btn" data-arp="maj7" data-pos="E">Maj7 Sweep (E)</button>
+              <button class="nav-btn" data-arp="min7" data-pos="D">Min7 Sweep (D)</button>
+            </div>
+            <div id="modal-sweep-fretboard"></div>
+            <div id="picking-arrows" class="picking-arrows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div>Guitar App</div>
+      <div class="small">Local version • Android compatible • Fretboard trainer</div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
