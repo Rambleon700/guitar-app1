@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Advanced Guitar Hub</title>
+  <meta name="description" content="Songs • Chords • Patterns • Practice • Fretboard Trainer" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="assets/logos/guitarhub-logo.svg" alt="Guitar Hub logo" class="logo" />
+        <div class="brand-text">
+          <h1>Advanced Guitar Hub</h1>
+          <p class="tagline">Songs • Chords • Patterns • Practice • Fretboard Trainer</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="open-settings" class="icon-btn" title="Settings" aria-label="Settings">
+          <img src="assets/icons/nav-songs.svg" alt="" />
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-btn active" data-section="songs-section" aria-pressed="true">Songs</button>
+    <button class="nav-btn" data-section="chords-section">Chords</button>
+    <button class="nav-btn" data-section="patterns-section">Patterns</button>
+    <button class="nav-btn" data-section="practice-section">Practice</button>
+    <button class="nav-btn" data-section="fretboard-section">Fretboard</button>
+  </nav>
+
+  <main id="app-main">
+    <!-- Songs -->
+    <section id="songs-section" class="section active" aria-labelledby="songs-heading">
+      <div class="section-header">
+        <h2 id="songs-heading">Songs Library</h2>
+        <p class="section-subtitle">Filter by chord count and difficulty to find songs.</p>
+      </div>
+
+      <div class="filters-row" role="region" aria-label="Song filters">
+        <div class="filter-group" aria-label="Chord count">
+          <span class="filter-label">Chord Count:</span>
+          <button class="filter-btn chord-count-filter active" data-filter="all">All</button>
+          <button class="filter-btn chord-count-filter" data-filter="2">2</button>
+          <button class="filter-btn chord-count-filter" data-filter="3">3</button>
+          <button class="filter-btn chord-count-filter" data-filter="4plus">4+</button>
+        </div>
+
+        <div class="filter-group" aria-label="Difficulty">
+          <span class="filter-label">Difficulty:</span>
+          <button class="filter-btn difficulty-filter active" data-filter="all">All</button>
+          <button class="filter-btn difficulty-filter" data-filter="Easy">Easy</button>
+          <button class="filter-btn difficulty-filter" data-filter="Intermediate">Intermediate</button>
+          <button class="filter-btn difficulty-filter" data-filter="Advanced">Advanced</button>
+        </div>
+      </div>
+
+      <div id="songs-grid" class="cards-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- Chords -->
+    <section id="chords-section" class="section" aria-labelledby="chords-heading">
+      <div class="section-header">
+        <h2 id="chords-heading">Chord Library</h2>
+        <p class="section-subtitle">Click a chord to render its diagram.</p>
+      </div>
+
+      <div class="chord-search-row">
+        <input id="chord-search-input" type="text" placeholder="Search chord (e.g. Am, G7)" aria-label="Search chord" />
+        <button id="chord-search-btn" class="btn">Search</button>
+      </div>
+
+      <div id="chords-list" class="chords-list" role="list"></div>
+
+      <div class="chord-diagram-wrapper">
+        <h3>Chord Diagram</h3>
+        <canvas id="chord-canvas" width="260" height="200" aria-label="Chord diagram"></canvas>
+      </div>
+    </section>
+
+    <!-- Patterns -->
+    <section id="patterns-section" class="section" aria-labelledby="patterns-heading">
+      <div class="section-header">
+        <h2 id="patterns-heading">Strumming Patterns</h2>
+        <p class="section-subtitle">Visualise and play pattern animations.</p>
+      </div>
+
+      <div class="patterns-controls">
+        <label>
+          Pattern:
+          <select id="pattern-select" aria-label="Select pattern">
+            <option value="D D U U D U">Classic Pop (D D U U D U)</option>
+            <option value="D U D U">Straight Eighths (D U D U)</option>
+            <option value="D D D D">All Downstrokes</option>
+            <option value="D D D U">Driving Pop</option>
+            <option value="Reggae">Reggae Offbeat</option>
+            <option value="Fingerpicked">Fingerpicked Arpeggio</option>
+          </select>
+        </label>
+        <button id="pattern-play-btn" class="btn accent">Play Pattern Animation</button>
+      </div>
+
+      <div id="pattern-visual" class="pattern-visual" aria-live="polite"></div>
+    </section>
+
+    <!-- Practice -->
+    <section id="practice-section" class="section" aria-labelledby="practice-heading">
+      <div class="section-header">
+        <h2 id="practice-heading">Practice Planner</h2>
+        <p class="section-subtitle">Generate short, focused routines.</p>
+      </div>
+
+      <div class="practice-controls">
+        <label>
+          Focus:
+          <select id="practice-focus-select" aria-label="Practice focus">
+            <option value="songs">Songs</option>
+            <option value="chords">Chords</option>
+            <option value="patterns">Patterns</option>
+            <option value="fretboard">Fretboard</option>
+          </select>
+        </label>
+
+        <label>
+          Duration (minutes):
+          <input id="practice-duration-input" type="number" min="5" max="60" value="15" aria-label="Practice duration" />
+        </label>
+
+        <button id="practice-generate-btn" class="btn accent">Generate Practice Plan</button>
+      </div>
+
+      <div id="practice-plan" class="practice-plan" aria-live="polite"></div>
+    </section>
+
+    <!-- Fretboard -->
+    <section id="fretboard-section" class="section" aria-labelledby="fretboard-heading">
+      <div class="section-header">
+        <h2 id="fretboard-heading">Fretboard Trainer</h2>
+        <p class="section-subtitle">Visualise scales, triads and sweep paths.</p>
+      </div>
+
+      <div class="fretboard-controls">
+        <label>
+          Root:
+          <select id="fb-root-select" aria-label="Fretboard root">
+            <option value="C">C</option><option value="D">D</option><option value="E">E</option>
+            <option value="F">F</option><option value="G">G</option><option value="A">A</option><option value="B">B</option>
+          </select>
+        </label>
+
+        <label>
+          Scale:
+          <select id="fb-scale-select" aria-label="Fretboard scale">
+            <option value="major">Major</option>
+            <option value="minor">Minor</option>
+            <option value="pentatonic-major">Pentatonic Major</option>
+            <option value="pentatonic-minor">Pentatonic Minor</option>
+          </select>
+        </label>
+
+        <label>
+          Overlay:
+          <select id="fb-overlay-select" aria-label="Fretboard overlay">
+            <option value="none">None</option>
+            <option value="triads">Triads</option>
+            <option value="arpeggios">Arpeggios</option>
+            <option value="sweeps">Sweep Paths</option>
+          </select>
+        </label>
+
+        <label>
+          Max Fret:
+          <input id="fb-max-fret-input" type="number" min="12" max="24" value="12" aria-label="Max fret" />
+        </label>
+
+        <button id="fb-render-btn" class="btn accent">Render Fretboard</button>
+      </div>
+
+      <canvas id="fretboard-canvas" width="900" height="220" aria-label="Fretboard canvas"></canvas>
+    </section>
+  </main>
+
+  <!-- Song Modal -->
+  <div id="song-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <button class="modal-close" id="song-modal-close" aria-label="Close">
+        <img src="assets/ui/modal-close.svg" alt="Close" />
+      </button>
+
+      <div id="song-modal-body">
+        <h2 id="modal-song-title"></h2>
+        <p id="modal-song-artist" class="muted"></p>
+
+        <div class="modal-row">
+          <div class="modal-column">
+            <h3>Chords</h3>
+            <div id="modal-song-chords" class="modal-chords-list"></div>
+          </div>
+
+          <div class="modal-column">
+            <h3>Pattern</h3>
+            <p id="modal-song-pattern"></p>
+            <button id="modal-pattern-play-btn" class="btn">Play Pattern Animation</button>
+          </div>
+        </div>
+
+        <hr />
+
+        <h3>Fretboard Trainer (Song Context)</h3>
+        <div class="modal-fretboard-controls">
+          <label>
+            Overlay:
+            <select id="modal-fb-overlay-select">
+              <option value="none">None</option>
+              <option value="triads">Triads</option>
+              <option value="arpeggios">Arpeggios</option>
+              <option value="sweeps">Sweep Paths</option>
+            </select>
+          </label>
+          <button id="modal-fb-render-btn" class="btn accent">Render Song Fretboard</button>
+        </div>
+
+        <canvas id="modal-fretboard-canvas" width="900" height="220" aria-label="Modal fretboard canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
