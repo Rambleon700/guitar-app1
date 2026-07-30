@@ -1,37 +1,24 @@
-/* modules/pattern-engine.js */
-export function buildPatternDots(patternString, containerEl) {
-  if (!containerEl) return;
-  containerEl.innerHTML = "";
-  const tokens = parsePattern(patternString);
-  tokens.forEach((t, i) => {
-    const dot = document.createElement("div");
-    dot.className = "pattern-dot";
-    dot.dataset.index = i;
-    dot.title = t;
-    containerEl.appendChild(dot);
-  });
-}
+// modal pattern play — ensure modal has its own visual container
+qs("#modal-pattern-play-btn")?.addEventListener("click", () => {
+  if (!currentModalSong) return;
+  const patternString = normalizePatternValue(currentModalSong.pattern);
 
-export function playPatternAnimation(containerEl, tempo = 90) {
-  if (!containerEl) return;
-  const dots = Array.from(containerEl.querySelectorAll(".pattern-dot"));
-  if (!dots.length) return;
-  let i = 0;
-  const interval = Math.max(120, Math.round(60000 / tempo));
-  if (containerEl._patternInterval) {
-    clearInterval(containerEl._patternInterval);
-    containerEl._patternInterval = null;
+  // prefer an existing modal visual; create one if missing
+  let modalPatternVisual = qs("#modal-pattern-visual");
+  if (!modalPatternVisual) {
+    modalPatternVisual = document.createElement("div");
+    modalPatternVisual.id = "modal-pattern-visual";
+    modalPatternVisual.className = "pattern-visual";
+    // append to modal body (safe fallback if structure changes)
+    const modalBody = qs("#song-modal-body") || qs("#song-modal");
+    modalBody.appendChild(modalPatternVisual);
   }
-  dots.forEach(d => d.classList.remove("active"));
-  containerEl._patternInterval = setInterval(() => {
-    dots.forEach(d => d.classList.remove("active"));
-    dots[i].classList.add("active");
-    i = (i + 1) % dots.length;
-  }, interval);
-}
 
-function parsePattern(str) {
-  if (!str) return ["D","D","U","U","D","U"];
-  if (str.includes(" ")) return str.split(" ").filter(Boolean);
-  return str.split("").filter(Boolean);
-}
+  try {
+    buildPatternDots(patternString, modalPatternVisual);
+    playPatternAnimation(modalPatternVisual);
+  } catch (err) {
+    console.warn("Pattern module missing or failed (modal)", err);
+  }
+});
+
