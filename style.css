@@ -1,0 +1,102 @@
+/* style.css - single-file theme + layout for Advanced Guitar Hub */
+
+/* Theme variables (dark by default) */
+:root{
+  --bg-page: linear-gradient(180deg,#07101a 0%,#020309 100%);
+  --bg-header: rgba(6,10,16,0.6);
+  --text-main: #e6eef6;
+  --text-muted: #9fb0bf;
+  --accent: #4fd1c5;
+  --card-bg: rgba(255,255,255,0.02);
+  --max-width: 1200px;
+  --gutter: 1.25rem;
+  --radius: 12px;
+  --pill-radius: 999px;
+  --transition-fast: 160ms;
+  --shadow: 0 12px 30px rgba(0,0,0,0.55);
+}
+
+/* Reset */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;line-height:1.35}
+body{min-height:100vh;background:var(--bg-page);color:var(--text-main);display:flex;flex-direction:column;align-items:stretch}
+
+/* Header */
+.app-header{position:sticky;top:0;background:var(--bg-header);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);z-index:60}
+.header-inner{max-width:var(--max-width);margin:0 auto;padding:0.9rem var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;gap:0.9rem;align-items:center}
+.logo{width:44px;height:44px;border-radius:8px;object-fit:contain}
+.brand-text h1{margin:0;font-size:1.05rem}
+.tagline{margin:0;color:var(--text-muted);font-size:0.85rem}
+
+/* Nav */
+.main-nav{display:flex;gap:0.5rem;padding:0.6rem var(--gutter);max-width:var(--max-width);margin:0 auto;align-items:center;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border-bottom:1px solid rgba(255,255,255,0.02);position:sticky;top:72px;z-index:50}
+.nav-btn{display:inline-flex;gap:0.5rem;align-items:center;padding:0.45rem 0.9rem;border-radius:var(--pill-radius);border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text-main);cursor:pointer;font-size:0.92rem;transition:transform var(--transition-fast),background var(--transition-fast)}
+.nav-btn.active{transform:translateY(-2px);background:linear-gradient(90deg,rgba(79,209,197,0.08),rgba(246,173,85,0.04));border-color:rgba(79,209,197,0.22);box-shadow:var(--shadow)}
+
+/* Main */
+main{max-width:var(--max-width);margin:1.25rem auto;padding:0 var(--gutter);width:100%;flex:1 1 auto}
+.section{display:none;margin-bottom:1.5rem}
+.section.active{display:block}
+.section-header{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:0.75rem}
+.section h2{margin:0}
+.section-subtitle{margin:0;color:var(--text-muted);font-size:0.9rem}
+
+/* Filters */
+.filters-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem}
+.filter-group{display:flex;gap:0.5rem;align-items:center;background:rgba(255,255,255,0.01);padding:0.35rem;border-radius:999px;border:1px solid rgba(255,255,255,0.02)}
+.filter-label{color:var(--text-muted);font-size:0.85rem}
+.filter-btn{padding:0.28rem 0.6rem;border-radius:var(--pill-radius);border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--text-main);font-size:0.82rem;cursor:pointer;transition:background var(--transition-fast),border-color var(--transition-fast)}
+.filter-btn.active{background:rgba(79,209,197,0.08);border-color:rgba(79,209,197,0.18);transform:translateY(-1px)}
+
+/* Grid & cards */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.song-card{background:var(--card-bg);border-radius:var(--radius);padding:0.9rem;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow);cursor:pointer;transition:transform 260ms,box-shadow 260ms}
+.song-card:hover{transform:translateY(-6px);border-color:rgba(79,209,197,0.12);box-shadow:0 18px 40px rgba(0,0,0,0.55)}
+.song-meta-row{display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem}
+.song-title{margin:0;font-size:1rem;font-weight:600}
+.song-artist{margin:0.15rem 0 0;color:var(--text-muted);font-size:0.86rem}
+.song-chords,.song-pattern{margin:0.5rem 0 0;color:var(--text-muted);font-size:0.85rem}
+.song-difficulty{padding:0.18rem 0.5rem;border-radius:var(--pill-radius);font-size:0.78rem;border:1px solid rgba(255,255,255,0.04)}
+
+/* Chords list */
+.chords-list{display:flex;flex-wrap:wrap;gap:0.45rem;margin-bottom:0.9rem}
+.chord-pill{padding:0.28rem 0.6rem;border-radius:var(--pill-radius);background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:pointer;font-size:0.86rem}
+.chord-pill:hover{background:rgba(79,209,197,0.06);border-color:rgba(79,209,197,0.16)}
+
+/* Controls & buttons */
+.patterns-controls,.practice-controls,.fretboard-controls{display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+select,input,button{padding:0.42rem 0.7rem;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text-main);font-size:0.9rem}
+.btn{padding:0.42rem 0.8rem;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:var(--text-main);cursor:pointer}
+.btn.accent{background:linear-gradient(90deg,rgba(79,209,197,0.12),rgba(246,173,85,0.06));border-color:rgba(79,209,197,0.18)}
+.btn:active{transform:translateY(1px)}
+
+/* Pattern visual */
+.pattern-visual{background:rgba(255,255,255,0.02);border-radius:var(--radius);padding:0.6rem;min-height:84px;display:flex;align-items:center;justify-content:center;gap:0.6rem;border:1px solid rgba(255,255,255,0.03)}
+.pattern-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--accent);background:transparent;transition:transform var(--transition-fast),background var(--transition-fast)}
+.pattern-dot.active{background:var(--accent);transform:scale(1.15)}
+
+/* Canvas */
+canvas{display:block;width:100%;max-width:100%;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03)}
+
+/* Modal */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,4,8,0.6);z-index:120;padding:1rem}
+.modal.open{display:flex}
+.modal-content{width:100%;max-width:980px;background:rgba(255,255,255,0.02);border-radius:14px;padding:1rem;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03);max-height:92vh;overflow-y:auto}
+.modal-close{position:absolute;top:12px;right:12px;border:none;background:transparent;cursor:pointer;padding:6px;border-radius:8px}
+
+/* Modal layout */
+.modal-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.8rem}
+.modal-column{flex:1;min-width:220px}
+
+/* Progress */
+.progress-bar{width:100%;height:12px;background:rgba(255,255,255,0.02);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#4fd1c5,#f6ad55);transition:width 260ms ease}
+
+/* Utilities */
+.muted{color:var(--text-muted);font-size:0.9rem}
+.hidden{display:none!important}
+
+/* Responsive */
+@media (max-width:900px){.main-nav{top:68px}.cards-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+@media (max-width:560px){.header-inner{flex-direction:column;align-items:flex-start}.main-nav{position:static}.filters-row{flex-direction:column}.patterns-controls,.practice-controls,.fretboard-controls{flex-direction:column;align-items:stretch}.modal-row{flex-direction:column}}
