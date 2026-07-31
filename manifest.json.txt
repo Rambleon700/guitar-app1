@@ -1,0 +1,21 @@
+{
+  "background_color": "#ffffff",
+  "description": "Songs • Chords • Patterns • Practice • Fretboard Trainer",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "rambleon700.github",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "rambleon700.github",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "id": "guitar-app1",
+  "lang": "en",
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "entertainment"
+  ]
+}
