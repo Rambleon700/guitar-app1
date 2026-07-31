@@ -1,21 +1,20 @@
 {
-  "background_color": "#ffffff",
-  "description": "Songs • Chords • Patterns • Practice • Fretboard Trainer",
-  "dir": "ltr",
-  "display": "standalone",
-  "name": "rambleon700.github",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "rambleon700.github",
-  "start_url": "/index.html",
-  "theme_color": "#ffffff",
-  "id": "guitar-app1",
-  "lang": "en",
-  "display_override": [
-    "standalone",
-    "window-controls-overlay"
+  "short_name": "Guitar App",
+  "name": "Guitar App",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
   ],
-  "categories": [
-    "entertainment"
-  ]
+  "start_url": "./index.html",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "display": "standalone"
 }
